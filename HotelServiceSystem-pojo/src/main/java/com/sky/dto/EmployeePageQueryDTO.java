@@ -10,6 +10,9 @@ public class EmployeePageQueryDTO implements Serializable {
     //员工姓名
     private String name;
 
+    //员工分类
+    private String type;
+
     //页码
     private int page;
 

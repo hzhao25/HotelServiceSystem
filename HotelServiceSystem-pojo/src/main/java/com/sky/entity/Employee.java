@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import com.baomidou.mybatisplus.annotation.TableField;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -18,9 +19,9 @@ public class Employee implements Serializable {
 
     private Long id;
 
-    private String username;
-
     private String name;
+
+    private String username;
 
     private String password;
 
@@ -30,13 +31,17 @@ public class Employee implements Serializable {
 
     private String idNumber;
 
+    private String type;
+
+    private String skills;
+
     private Integer status;
 
     //@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime createTime;
+    private LocalDateTime createdAt;
 
     //@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime updateTime;
+    private LocalDateTime updatedAt;
 
     private Long createUser;
 
