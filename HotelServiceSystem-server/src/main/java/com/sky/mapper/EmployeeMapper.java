@@ -1,8 +1,10 @@
 package com.sky.mapper;
 
 import com.github.pagehelper.Page;
+import com.sky.annotation.AutoFill;
 import com.sky.dto.EmployeePageQueryDTO;
 import com.sky.entity.Employee;
+import com.sky.enumeration.OperationType;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -22,8 +24,9 @@ public interface EmployeeMapper {
      * 添加员工信息
      * @param employee
      */
+    @AutoFill(value = OperationType.INSERT)
     @Insert("insert into staff (id,name,phone,password,type,skills,status,created_at,updated_at,sex,username,idNumber,createUser,updateUser) " +
-            "values(#{id},#{name},#{phone},#{password},#{type},#{skills},#{status},#{created_at},#{updated_at},#{sex},#{username},#{idNumber},#{createUser},#{updateUser})")
+            "values(#{id},#{name},#{phone},#{password},#{type},#{skills},#{status},#{createdAt},#{updatedAt},#{sex},#{username},#{idNumber},#{createUser},#{updateUser})")
     void save(Employee employee);
 
     /**
@@ -37,6 +40,7 @@ public interface EmployeeMapper {
      * 启用禁用员工账号
      * @param employee
      */
+    @AutoFill(value = OperationType.UPDATE)
     void startOrStop(Employee employee);
 
     /**
@@ -51,5 +55,6 @@ public interface EmployeeMapper {
      * 更新员工信息
      * @param employee
      */
+    @AutoFill(value = OperationType.UPDATE)
     void update(Employee employee);
 }

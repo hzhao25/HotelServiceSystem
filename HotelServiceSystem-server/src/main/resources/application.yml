@@ -12,6 +12,18 @@ spring:
       url: jdbc:mysql://${sky.datasource.host}:${sky.datasource.port}/${sky.datasource.database}?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true
       username: ${sky.datasource.username}
       password: ${sky.datasource.password}
+  #可上传的图片大小
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 5MB
+  redis:
+    host: ${sky.redis.host}
+    port: ${sky.redis.port}
+    password: ${sky.redis.password}
+    databse: ${sky.redis.database}
+#  mvc:
+#    static-path-pattern: /static/**
 
 mybatis:
   #mapper配置文件
@@ -37,3 +49,18 @@ sky:
     admin-ttl: 7200000
     # 设置前端传递过来的令牌名称
     admin-token-name: token
+  alioss:
+    endpoint: ${sky.alioss.endpoint}
+    access-key-id: ${sky.alioss.access-key-id}
+    access-key-secret: ${sky.alioss.access-key-secret}
+    bucket-name: ${sky.alioss.buckey-name}
+
+## 配置文件上传目录
+#file:
+#  upload-dir: HotelServiceSystm-server/src/main/resources/static/uploads
+
+
+
+
+
+

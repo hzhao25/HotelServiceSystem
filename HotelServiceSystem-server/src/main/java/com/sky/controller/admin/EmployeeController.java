@@ -11,6 +11,7 @@ import com.sky.result.Result;
 import com.sky.service.EmployeeService;
 import com.sky.utils.JwtUtil;
 import com.sky.vo.EmployeeLoginVO;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,11 +22,24 @@ import java.util.Map;
 import java.util.concurrent.RecursiveTask;
 
 /**
+ * 技术：
+ * md5密码加密解密
+ * TreadLocal管理当前线程里的数据信息（员工编号）
+ * Swagger生成接口文档，在线调试接口
+ * 分页查询PageHelper帮助员工信息分页查找
+ * yml配置文件配置驼峰命名映射
+ * 创建对象映射器JacksonObjectMapper和springMVC消息转换器，达成统一日期格式
+ * 注解和AOP切片操作将员工和分类的统一字段进行处理，减少代码的冗余
+ * 阿里云Oss远程上传文件，利用UUID重命名文件名，配置基本信息propertise，工具类Utils，配置工具类的配置文件configuration
+ */
+
+/**
  * 员工管理
  */
 @RestController
 @RequestMapping("/admin/employee")
 @Slf4j//日志
+@Api(tags = "员工相关接口")
 public class EmployeeController {
 
     @Autowired
