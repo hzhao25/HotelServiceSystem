@@ -169,6 +169,7 @@ public class HttpClientUtil {
 
         return resultString;
     }
+    //构建请求的超时配置，设置连接超时时间、连接请求超时时间和套接字超时时间为TIMEOUT_MSEC
     private static RequestConfig builderRequestConfig() {
         return RequestConfig.custom()
                 .setConnectTimeout(TIMEOUT_MSEC)

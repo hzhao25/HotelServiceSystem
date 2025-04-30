@@ -1,6 +1,7 @@
 package com.sky.config;
 
 import com.sky.interceptor.JwtTokenAdminInterceptor;
+import com.sky.interceptor.JwtTokenUserInterceptor;
 import com.sky.json.JacksonObjectMapper;
 import io.netty.util.Mapping;
 import lombok.extern.slf4j.Slf4j;
@@ -33,6 +34,9 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
     @Autowired
     private JwtTokenAdminInterceptor jwtTokenAdminInterceptor;
 
+    @Autowired
+    private JwtTokenUserInterceptor jwtTokenUserInterceptor;
+
     /**
      * 注册自定义拦截器
      *
@@ -43,6 +47,11 @@ public class WebMvcConfiguration extends WebMvcConfigurationSupport {
         registry.addInterceptor(jwtTokenAdminInterceptor)//将 jwtTokenAdminInterceptor 拦截器添加到拦截器注册表中
                 .addPathPatterns("/admin/**")//拦截哪些资源
                 .excludePathPatterns("/admin/employee/login");//不拦截哪些资源，登录后才有jwt令牌
+
+        registry.addInterceptor(jwtTokenUserInterceptor)
+                .addPathPatterns("/user/**")
+                .excludePathPatterns("/user/user/login")
+                .excludePathPatterns("user/shop/status");
     }
 
     /**

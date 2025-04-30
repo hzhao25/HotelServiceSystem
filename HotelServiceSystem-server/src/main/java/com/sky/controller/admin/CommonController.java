@@ -1,31 +1,20 @@
 package com.sky.controller.admin;
 
+import com.alibaba.fastjson.JSONObject;
 import com.sky.constant.MessageConstant;
-import com.sky.constant.UploadUrlConstant;
-import com.sky.exception.FIleUploadNullException;
-import com.sky.properties.UploadPathProperties;
-import org.springframework.beans.factory.annotation.Value;
+import com.sky.utils.AccessTokenUtil;
 import com.sky.result.Result;
 import com.sky.utils.AliOssUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.IOException;
-import java.lang.reflect.Field;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
-import java.util.HashMap;
-import java.util.Map;
+import java.io.*;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.UUID;
 
 /**
@@ -38,6 +27,10 @@ import java.util.UUID;
 public class CommonController {
     @Autowired
     private AliOssUtil aliOssUtil;
+
+    @Autowired
+    private AccessTokenUtil accessTokenUtil;
+
 
     /*@Autowired
     private UploadPathProperties uploadPathProperties;*/
@@ -92,4 +85,6 @@ public class CommonController {
             log.info("文件上传失败：{}",e);
         }*/
     }
+
+
 }
