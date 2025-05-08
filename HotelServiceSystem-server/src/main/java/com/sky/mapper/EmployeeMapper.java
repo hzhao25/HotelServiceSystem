@@ -9,6 +9,8 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
+import java.util.List;
+
 @Mapper
 public interface EmployeeMapper {
 
@@ -57,4 +59,11 @@ public interface EmployeeMapper {
      */
     @AutoFill(value = OperationType.UPDATE)
     void update(Employee employee);
+
+    /**
+     * 根据员工类型查找员工
+     * @param type
+     */
+    @Select("select * from staff where type=#{type}")
+    List<Employee> selectByType(String type);
 }

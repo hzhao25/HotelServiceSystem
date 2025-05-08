@@ -97,4 +97,13 @@ public class ProductServiceImpl implements ProductService {
         }
         productMapper.deleteById(id);
     }
+
+    /**
+     * 查询所有商品信息
+     * @return
+     */
+    public List<Product> select() {
+        List<Product> productList= productMapper.select();
+        return productList;
+    }
 }

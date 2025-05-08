@@ -24,4 +24,6 @@ public interface EmployeeService {
     Employee getById(Long id);
 
     void update(EmployeeDTO employeeDTO);
+
+    Employee loginC(EmployeeLoginDTO employeeLoginDTO);
 }

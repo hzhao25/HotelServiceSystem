@@ -49,4 +49,9 @@ public interface DishService {
      */
     void startOrStop(Integer status, Long id);
 
+    /**
+     * 查询所有的菜品数据
+     * @return
+     */
+    List<DishVO> select();
 }

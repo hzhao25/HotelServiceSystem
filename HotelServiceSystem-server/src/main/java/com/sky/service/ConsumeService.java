@@ -5,6 +5,8 @@ import com.sky.dto.ConsumePageQueryDTO;
 import com.sky.entity.Consume;
 import com.sky.result.PageResult;
 
+import java.util.List;
+
 public interface ConsumeService {
     /**
      * 添加消耗品
@@ -44,4 +46,10 @@ public interface ConsumeService {
      * @param id
      */
     void deleteById(Integer id);
+
+    /**
+     * 查询所有消耗品
+     * @return
+     */
+    List<Consume> select();
 }

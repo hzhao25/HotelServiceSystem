@@ -153,4 +153,18 @@ public class DishServiceImpl implements DishService {
         dishMapper.update(dish);
     }
 
+    /**
+     * 查询所有的菜品数据
+     * @return
+     */
+    public List<DishVO> select(){
+        List<DishVO> dishList= dishMapper.select();
+        for(DishVO dish : dishList){
+            Long dishId=dish.getId();
+            List<DishFlavor> dishFlavor = dishFlavorMapper.getByDishId(dishId);
+            dish.setFlavors(dishFlavor);
+        }
+        return dishList;
+    }
+
 }

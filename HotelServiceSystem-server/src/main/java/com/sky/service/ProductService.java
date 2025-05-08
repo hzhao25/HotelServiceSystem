@@ -5,6 +5,8 @@ import com.sky.dto.ProductPageQueryDTO;
 import com.sky.entity.Product;
 import com.sky.result.PageResult;
 
+import java.util.List;
+
 public interface ProductService {
     /**
      * 添加商品
@@ -44,4 +46,10 @@ public interface ProductService {
      * @param id
      */
     void deleteById(Integer id);
+
+    /**
+     * 查询所有商品信息
+     * @return
+     */
+    List<Product> select();
 }

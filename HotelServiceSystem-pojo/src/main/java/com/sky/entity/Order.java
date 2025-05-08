@@ -1,4 +1,4 @@
-package com.sky.vo;
+package com.sky.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class OrderVO implements Serializable {
+public class Order implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -34,6 +34,8 @@ public class OrderVO implements Serializable {
     private LocalDateTime bookTime;
 
     private LocalDateTime completedTime;
+
+    private LocalDateTime createdAt;
 
     private LocalDateTime updatedAt;
 

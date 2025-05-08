@@ -32,6 +32,13 @@ public interface DishMapper {
     int selectDish();
 
     /**
+     * 查找菜品表里所有的菜品数据
+     * @return
+     */
+    @Select("select * from dish")
+    List<DishVO> select();
+
+    /**
      * 添加菜品
      * @param dish
      */

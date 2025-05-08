@@ -1,4 +1,4 @@
-package com.sky.vo;
+package com.sky.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -10,20 +10,12 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Data
-@Builder
-@NoArgsConstructor
 @AllArgsConstructor
-public class OrderVO implements Serializable {
-
-    private static final long serialVersionUID = 1L;
-
-    private Long id;
-
-    private Long roomId;
+@NoArgsConstructor
+@Builder
+public class OrderDTO implements Serializable {
 
     private Long userId;
-
-    private Long staffId;
 
     private String type;
 
@@ -32,10 +24,6 @@ public class OrderVO implements Serializable {
     private String image;
 
     private LocalDateTime bookTime;
-
-    private LocalDateTime completedTime;
-
-    private LocalDateTime updatedAt;
 
     //0紧急1正常
     private int emergency;

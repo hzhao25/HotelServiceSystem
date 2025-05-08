@@ -11,6 +11,7 @@ import com.sky.mapper.UserMapper;
 import com.sky.properties.WeChatProperties;
 import com.sky.service.UserService;
 import com.sky.utils.HttpClientUtil;
+import com.sky.vo.OrderVO;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.impl.client.HttpClients;
 import org.aspectj.apache.bcel.classfile.Module;
@@ -19,6 +20,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Service

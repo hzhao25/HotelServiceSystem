@@ -96,4 +96,13 @@ public class ConsumeServiceimpl implements ConsumeService {
         }
         consumeMapper.deleteById(id);
     }
+
+    /**
+     * 查询所有消耗品
+     * @return
+     */
+    public List<Consume> select() {
+        List<Consume> consumeList= consumeMapper.select();
+        return consumeList;
+    }
 }

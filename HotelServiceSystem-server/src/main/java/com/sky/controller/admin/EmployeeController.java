@@ -31,12 +31,14 @@ import java.util.concurrent.RecursiveTask;
  * 创建对象映射器JacksonObjectMapper和springMVC消息转换器，达成统一日期格式
  * 注解和AOP切片操作将员工和分类的统一字段进行处理，减少代码的冗余
  * 阿里云Oss远程上传文件，利用UUID重命名文件名，配置基本信息propertise，工具类Utils，配置工具类的配置文件configuration
+ * 在小程序可能同时有大量用户查询商品/消耗品/菜品的信息，如果每次查询都要访问数据库，性能会下降
+ * 所以把这些数据放到redis缓存当中，加快查询速度，当后端增删改查这些数据时，redis缓存要重新加载
  */
 
 /**
  * 员工管理
  */
-@RestController
+@RestController("adminEmployeeController")
 @RequestMapping("/admin/employee")
 @Slf4j//日志
 @Api(tags = "员工相关接口")

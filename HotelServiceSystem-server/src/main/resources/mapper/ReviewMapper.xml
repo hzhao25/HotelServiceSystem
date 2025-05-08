@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sky.mapper.ReviewMapper">
+
+<!--    useGeneratedKeys返回自动生成的主键值-->
+<!--    MyBatis会将数据库自动生成的主键值赋给Dish对象的id属性。可以通过该对象的getId()方法获取这个主键值-->
+    <insert id="save">
+        insert into review (order_id,`type`,staff_id,rating,comment,created_at,user_id)
+        values (#{orderId},#{type},#{staffId},#{rating},#{comment},#{createdAt},#{userId})
+    </insert>
+</mapper>

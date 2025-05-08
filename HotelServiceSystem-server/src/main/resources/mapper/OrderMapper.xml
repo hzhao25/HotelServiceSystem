@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.sky.mapper.OrderMapper">
+
+<!--    useGeneratedKeys返回自动生成的主键值-->
+<!--    MyBatis会将数据库自动生成的主键值赋给Dish对象的id属性。可以通过该对象的getId()方法获取这个主键值-->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        insert into `order` (room_id,user_id,staff_id,`type`,description,image,book_time,completed_time,created_at,updated_at,emergency,price,status)
+        values (#{roomId},#{userId},#{staffId},#{type},#{description},#{image},#{bookTime},#{completedTime},#{createdAt},#{updatedAt},#{emergency},#{price},#{status})
+    </insert>
+    <update id="update">
+        update `order`
+        <set>
+            <if test="roomId!=null">room_id=#{roomId},</if>
+            <if test="userId!=null">user_id=#{userId},</if>
+            <if test="staffId!=null">staff_id=#{staffId},</if>
+            <if test="type!=null">`type`=#{type},</if>
+            <if test="price!=null">price=#{price},</if>
+            <if test="image!=null">image=#{image},</if>
+            <if test="description!=null">description=#{description},</if>
+            <if test="status!=null">status=#{status},</if>
+            <if test="emergency!=null">emergency=#{emergency},</if>
+            <if test="bookTime!=null">book_time=#{bookTime},</if>
+            <if test="completedTime!=null">completed_time=#{completedTime},</if>
+            <if test="updatedAt!=null">updated_at=#{updatedAt},</if>
+        </set>
+        where id=#{id}
+    </update>
+    <update id="updateStatus">
+        update `order` set status=#{status} where id=#{id}
+    </update>
+    <delete id="deleteByIds">
+        delete from dish where id in
+        <foreach collection="ids" open="(" close=")" separator="," item="id">
+            #{id}
+        </foreach>
+    </delete>
+    <select id="pageQuery" resultType="com.sky.vo.DishVO">
+        select * from dish
+        <where>
+            <if test="name!=null and name!=''">
+                and name like concat('%',#{name},'%')
+            </if>
+            <if test="category!=null and category!=''">
+                and category=#{category}
+            </if>
+            <if test="status!=null">
+                and status=#{status}
+            </if>
+        </where>
+    </select>
+</mapper>

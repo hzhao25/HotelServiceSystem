@@ -10,9 +10,10 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
-@RestController
+@RestController("adminConsumeController")
 @RequestMapping("/admin/consume")
 @Api(tags = "消耗品相关接口")
 @Slf4j
@@ -20,6 +21,11 @@ public class ConsumeController {
 
     @Autowired
     private ConsumeService consumeService;
+
+    @Autowired
+    private RedisTemplate redisTemplate;
+
+    private static final String KEY="consume";
 
     /**
      * 添加消耗品
@@ -31,6 +37,7 @@ public class ConsumeController {
     public Result save(@RequestBody ConsumeDTO consumeDTO){
         log.info("添加的消耗品信息：{}",consumeDTO);
         consumeService.save(consumeDTO);
+        redisTemplate.delete(KEY);
         return Result.success();
     }
 
@@ -73,6 +80,8 @@ public class ConsumeController {
 
         consumeService.update(consumeDTO);
 
+        redisTemplate.delete(KEY);
+
         return Result.success();
     }
 
@@ -87,6 +96,7 @@ public class ConsumeController {
     public Result startOrStop(@PathVariable Integer status,Integer id){
         log.info("售卖停售消耗品：{},{}",status,id);
         consumeService.startOrStop(status,id);
+        redisTemplate.delete(KEY);
         return Result.success();
     }
 
@@ -100,6 +110,7 @@ public class ConsumeController {
     public Result<String> deleteById(Integer id){
         log.info("删除消耗品：{}",id);
         consumeService.deleteById(id);
+        redisTemplate.delete(KEY);
         return Result.success();
     }
 }

@@ -10,9 +10,10 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
-@RestController
+@RestController("adminProductController")
 @RequestMapping("/admin/product")
 @Api(tags = "商品相关接口")
 @Slf4j
@@ -20,6 +21,12 @@ public class ProductController {
 
     @Autowired
     private ProductService productService;
+
+    @Autowired
+    private RedisTemplate redisTemplate;
+
+    private static final String KEY="product";
+
 
     /**
      * 添加商品
@@ -31,6 +38,7 @@ public class ProductController {
     public Result save(@RequestBody ProductDTO productDTO){
         log.info("添加的商品信息：{}",productDTO);
         productService.save(productDTO);
+        redisTemplate.delete(KEY);
         return Result.success();
     }
 
@@ -73,6 +81,8 @@ public class ProductController {
 
         productService.update(productDTO);
 
+        redisTemplate.delete(KEY);
+
         return Result.success();
     }
 
@@ -87,6 +97,7 @@ public class ProductController {
     public Result startOrStop(@PathVariable Integer status,Integer id){
         log.info("售卖停售商品：{},{}",status,id);
         productService.startOrStop(status,id);
+        redisTemplate.delete(KEY);
         return Result.success();
     }
 
@@ -100,6 +111,7 @@ public class ProductController {
     public Result<String> deleteById(Integer id){
         log.info("删除商品：{}",id);
         productService.deleteById(id);
+        redisTemplate.delete(KEY);
         return Result.success();
     }
 }

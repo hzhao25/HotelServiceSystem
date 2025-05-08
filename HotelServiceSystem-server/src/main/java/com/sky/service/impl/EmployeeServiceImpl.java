@@ -16,6 +16,7 @@ import com.sky.exception.PasswordErrorException;
 import com.sky.mapper.EmployeeMapper;
 import com.sky.result.PageResult;
 import com.sky.service.EmployeeService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,6 +26,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
+@Slf4j
 public class EmployeeServiceImpl implements EmployeeService {
 
     @Autowired
@@ -53,6 +55,42 @@ public class EmployeeServiceImpl implements EmployeeService {
         //只能管理员登录
         if(!employee.getType().equals("管理员")){
             throw new AccountLockedException(MessageConstant.NOT_MANAGER);
+        }
+
+        //密码比对
+        //对前端传过来的明文密码进行md5加密处理
+        password=DigestUtils.md5DigestAsHex(password.getBytes());
+        if (!password.equals(employee.getPassword())) {
+            //密码错误，抛出设定好的异常
+            throw new PasswordErrorException(MessageConstant.PASSWORD_ERROR);
+        }
+
+        if (employee.getStatus() == StatusConstant.DISABLE) {
+            //账号被锁定，抛出设定好的异常
+            throw new AccountLockedException(MessageConstant.ACCOUNT_LOCKED);
+        }
+
+        //3、返回实体对象
+        return employee;
+    }
+
+    /**
+     * C端的员工登录
+     * @param employeeLoginDTO
+     * @return
+     */
+    public Employee loginC(EmployeeLoginDTO employeeLoginDTO) {
+        //输入的用户名和密码
+        String username = employeeLoginDTO.getUsername();
+        String password = employeeLoginDTO.getPassword();
+
+        //1、根据用户名查询数据库中的数据
+        Employee employee = employeeMapper.getByUsername(username);
+
+        //2、处理各种异常情况（用户名不存在、密码不对、账号被锁定）
+        if (employee == null) {
+            //账号不存在，抛出设定好的异常
+            throw new AccountNotFoundException(MessageConstant.ACCOUNT_NOT_FOUND);
         }
 
         //密码比对

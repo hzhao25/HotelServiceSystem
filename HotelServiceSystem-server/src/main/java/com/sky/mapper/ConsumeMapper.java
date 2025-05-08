@@ -9,6 +9,8 @@ import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
+import java.util.List;
+
 @Mapper
 public interface ConsumeMapper {
     /**
@@ -17,6 +19,13 @@ public interface ConsumeMapper {
      */
     @Select("select count(*) from consume")
     int selectConsume();
+
+    /**
+     * 查询所有消耗品
+     * @return
+     */
+    @Select("select * from consume")
+    List<Consume> select();
 
     /**
      * 添加消耗品信息

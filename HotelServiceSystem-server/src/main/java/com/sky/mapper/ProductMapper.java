@@ -3,6 +3,7 @@ package com.sky.mapper;
 import com.github.pagehelper.Page;
 import com.sky.annotation.AutoFill;
 import com.sky.dto.ProductPageQueryDTO;
+import com.sky.entity.Consume;
 import com.sky.entity.Product;
 import com.sky.enumeration.OperationType;
 import lombok.extern.slf4j.Slf4j;
@@ -10,6 +11,8 @@ import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+
+import java.util.List;
 
 @Mapper
 public interface ProductMapper {
@@ -19,6 +22,13 @@ public interface ProductMapper {
      */
     @Select("select count(*) from product")
     int selectProduct();
+
+    /**
+     * 查询所有商品
+     * @return
+     */
+    @Select("select * from product")
+    List<Product> select();
 
     /**
      * 添加商品信息

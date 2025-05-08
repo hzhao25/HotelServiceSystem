@@ -17,4 +17,12 @@ public class BaseContext {
         threadLocal.remove();
     }
 
+    public static void setCurrentUserId(Long id) {
+        threadLocal.set(id);
+    }
+
+    public static Long getCurrentUserId() {
+        return threadLocal.get();
+    }
+
 }

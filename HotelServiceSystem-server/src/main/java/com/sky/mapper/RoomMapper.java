@@ -68,4 +68,10 @@ public interface RoomMapper {
      */
     @Update("update room set user_id=1 where id=#{id}")
     void updateUserIdNotNull(Integer id);
+
+    /**
+     * 查找属于当前用户的客房
+     */
+    @Select("select id from room where user_id=#{id} limit 1")
+    Long selectByUserId(Long id);
 }
