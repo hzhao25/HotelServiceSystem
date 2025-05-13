@@ -1,15 +1,21 @@
 package com.sky.service.impl;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import com.sky.constant.OrderConstant;
 import com.sky.context.BaseContext;
 import com.sky.dto.OrderDTO;
+import com.sky.dto.OrdersPageQueryDTO;
 import com.sky.entity.Employee;
 import com.sky.entity.Order;
 import com.sky.mapper.EmployeeMapper;
 import com.sky.mapper.OrderMapper;
 import com.sky.mapper.RoomMapper;
+import com.sky.result.PageResult;
 import com.sky.service.EmployeeService;
 import com.sky.service.OrderService;
+import com.sky.vo.OrderDetailVO;
+import com.sky.vo.OrderPageQueryVO;
 import com.sky.vo.OrderVO;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.annotations.Select;
@@ -127,11 +133,34 @@ public class OrderServiceImpl implements OrderService {
 
     /**
      * 取消订单
-     * @param id
-     * @param status
+     * @param order
      */
-    public void updateStatus(String status,Long id) {
-        orderMapper.updateStatus(status,id);
+    public void updateStatus(Order order) {
+        if(order.getStatus().equals("已完成")){
+            order.setCompletedTime(LocalDateTime.now());
+        }
+        orderMapper.update(order);
+    }
+
+    /**
+     * 订单分页查询
+     * @param ordersPageQueryDTO
+     * @return
+     */
+    public PageResult pageQuery(OrdersPageQueryDTO ordersPageQueryDTO) {
+        PageHelper.startPage(ordersPageQueryDTO.getPage(),ordersPageQueryDTO.getPageSize());
+        Page<OrderPageQueryVO> page=orderMapper.pageQuery(ordersPageQueryDTO);
+        return new PageResult(page.getTotal(),page.getResult());
+    }
+
+    /**
+     * 根据订单id查询订单详细信息
+     * @param id
+     * @return
+     */
+    public OrderDetailVO selectByOrderId(Integer id) {
+        OrderDetailVO orderDetailVO=orderMapper.selectByOrderId(id);
+        return orderDetailVO;
     }
 
 

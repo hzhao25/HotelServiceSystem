@@ -8,6 +8,7 @@ import com.sky.enumeration.OperationType;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
 
@@ -66,4 +67,20 @@ public interface EmployeeMapper {
      */
     @Select("select * from staff where type=#{type}")
     List<Employee> selectByType(String type);
+
+    /**
+     * 根据手机号查找员工信息
+     * @param phone
+     * @return
+     */
+    @Select("select * from staff where phone=#{phone}")
+    Employee getByPhone(String phone);
+
+    /**
+     * 修改密码
+     * @param newPassword
+     * @param id
+     */
+    @Update("update staff set password=#{newPassword} where id=#{id}")
+    void updatePassword(String newPassword, Long id);
 }

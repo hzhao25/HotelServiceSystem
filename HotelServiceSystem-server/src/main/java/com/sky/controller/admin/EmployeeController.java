@@ -1,9 +1,11 @@
 package com.sky.controller.admin;
 
 import com.sky.constant.JwtClaimsConstant;
+import com.sky.context.BaseContext;
 import com.sky.dto.EmployeeDTO;
 import com.sky.dto.EmployeeLoginDTO;
 import com.sky.dto.EmployeePageQueryDTO;
+import com.sky.dto.PasswordEditDTO;
 import com.sky.entity.Employee;
 import com.sky.properties.JwtProperties;
 import com.sky.result.PageResult;
@@ -15,6 +17,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -161,4 +164,21 @@ public class EmployeeController {
         return Result.success();
     }
 
+    /**
+     * 员工修改密码
+     * @param passwordEditDTO
+     * @return
+     */
+    @PutMapping("/editPassword")
+    @ApiOperation("修改密码")
+    public Result editPassword(@RequestBody PasswordEditDTO passwordEditDTO){
+        log.info("修改密码的员工:{}", BaseContext.getCurrentId());
+        Employee employee = employeeService.getById(BaseContext.getCurrentId());
+        String oldPassword= DigestUtils.md5DigestAsHex(passwordEditDTO.getOldPassword().getBytes());
+        if(oldPassword.equals(employee.getPassword())){
+            String newPassword=DigestUtils.md5DigestAsHex(passwordEditDTO.getNewPassword().getBytes());
+            employeeService.updatePassword(newPassword,employee.getId());
+        }
+        return Result.success();
+    }
 }

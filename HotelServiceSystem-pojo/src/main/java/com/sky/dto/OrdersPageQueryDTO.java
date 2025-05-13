@@ -13,18 +13,11 @@ public class OrdersPageQueryDTO implements Serializable {
 
     private int pageSize;
 
-    private String number;
-
     private  String phone;
 
-    private Integer status;
+    private String status;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime beginTime;
+    private Integer emergency;
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime endTime;
-
-    private Long userId;
-
+    private Integer id;
 }

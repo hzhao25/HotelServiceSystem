@@ -1,7 +1,10 @@
 package com.sky.controller.user;
 
 import com.sky.constant.JwtClaimsConstant;
+import com.sky.context.BaseContext;
 import com.sky.dto.EmployeeLoginDTO;
+import com.sky.dto.ForgetPasswordDTO;
+import com.sky.dto.PasswordEditDTO;
 import com.sky.entity.Employee;
 import com.sky.mapper.EmployeeMapper;
 import com.sky.properties.JwtProperties;
@@ -16,6 +19,7 @@ import io.swagger.annotations.ApiOperation;
 import jdk.nashorn.internal.ir.ReturnNode;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.crypto.interfaces.PBEKey;
@@ -73,8 +77,8 @@ public class EmployeeController {
      * 生成C端员工忘记密码的验证码
      * @return
      */
-    @GetMapping("/forget")
-    @ApiOperation("C端员工忘记密码")
+    @GetMapping("/code")
+    @ApiOperation("C端员工验证码")
     public Result<String> forget(){
         StringBuffer code =new StringBuffer();
         Random random=new Random();
@@ -96,5 +100,23 @@ public class EmployeeController {
         List<OrderVO> list= orderService.selectOrderByStaffId(staffId);
 
         return Result.success(list);
+    }
+
+    /**
+     * C端员工忘记密码
+     * @param forgetPasswordDTO
+     * @return
+     */
+    @PutMapping("/forget")
+    @ApiOperation("C端忘记密码")
+    public Result forgetPassword(@RequestBody ForgetPasswordDTO forgetPasswordDTO){
+        Employee employee = employeeService.getByPhone(forgetPasswordDTO.getPhone());
+        log.info("忘记密码的员工:{}", employee.getId());
+        String oldPassword= DigestUtils.md5DigestAsHex(forgetPasswordDTO.getOldPassword().getBytes());
+        if(oldPassword.equals(employee.getPassword())){
+            String newPassword=DigestUtils.md5DigestAsHex(forgetPasswordDTO.getNewPassword().getBytes());
+            employeeService.updatePassword(newPassword,employee.getId());
+        }
+        return Result.success();
     }
 }

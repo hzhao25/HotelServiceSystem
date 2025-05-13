@@ -1,6 +1,7 @@
 package com.sky.controller.user;
 
 import com.sky.dto.OrderDTO;
+import com.sky.entity.Order;
 import com.sky.result.Result;
 import com.sky.service.OrderService;
 import com.sky.vo.OrderVO;
@@ -11,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
-@RestController
+@RestController("userOrderController")
 @RequestMapping("/user/order")
 @Api(tags = "C端订单相关接口")
 @Slf4j
@@ -37,15 +38,18 @@ public class OrderController {
     }
 
     /**
-     * 取消订单
+     * 更新订单状态
      * @param id
      * @param status
      * @return
      */
-    @PostMapping("/cancel/{status}")
-    @ApiOperation("C端订单取消")
-    public Result cancel( @PathVariable("status") String status,Long id){
-        orderService.updateStatus(status,id);
+    @PostMapping("/updateStatus/{status}")
+    @ApiOperation("C端订单状态更新")
+    public Result updateStatus( @PathVariable("status") String status,Long id){
+        Order order= new Order();
+        order.setId(id);
+        order.setStatus(status);
+        orderService.updateStatus(order);
         return Result.success();
     }
 }

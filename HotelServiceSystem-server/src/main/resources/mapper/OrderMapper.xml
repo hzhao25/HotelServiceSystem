@@ -27,27 +27,61 @@
         </set>
         where id=#{id}
     </update>
-    <update id="updateStatus">
-        update `order` set status=#{status} where id=#{id}
-    </update>
-    <delete id="deleteByIds">
-        delete from dish where id in
-        <foreach collection="ids" open="(" close=")" separator="," item="id">
-            #{id}
-        </foreach>
-    </delete>
-    <select id="pageQuery" resultType="com.sky.vo.DishVO">
-        select * from dish
+    <select id="pageQuery" resultType="com.sky.vo.OrderPageQueryVO">
+        select
+            o.id,
+            o.room_id as roomId,
+            u.name as username,
+            u.phone,
+            o.description,
+            o.image,
+            o.price,
+            o.emergency,
+            o.status,
+            o.book_time as bookTime
+        from `order` o
+        left join room r on o.room_id=r.id
+        left join `user` u on r.user_id=u.id
         <where>
-            <if test="name!=null and name!=''">
-                and name like concat('%',#{name},'%')
+            <if test="phone!=null and phone!=''">
+                and u.phone=#{phone}
             </if>
-            <if test="category!=null and category!=''">
-                and category=#{category}
+            <if test="status!=null and status!=''">
+                and o.status=#{status}
             </if>
-            <if test="status!=null">
-                and status=#{status}
+            <if test="emergency!=null">
+                and o.emergency=#{emergency}
+            </if>
+            <if test="id!=null">
+                and o.id=#{id}
             </if>
         </where>
+        order by o.created_at desc
+    </select>
+    <select id="selectByOrderId" resultType="com.sky.vo.OrderDetailVO">
+        select
+            o.id,
+            o.room_id as roomId,
+            r.name as roomName,
+            o.user_id as userId,
+            u.name as username,
+            u.phone,
+            o.staff_id as staffId,
+            s.name as staffName,
+            o.type,
+            o.description,
+            o.image,
+            o.book_time as bookTime,
+            o.completed_time as completedTime,
+            o.created_at as createdAt,
+            o.updated_at as updatedAt,
+            o.emergency,
+            o.price,
+            o.status
+        from `order` o
+        left join room r on o.room_id=r.id
+        left join staff s on o.staff_id=s.id
+        left join `user` u on o.user_id=u.id
+        where o.id=#{id}
     </select>
 </mapper>

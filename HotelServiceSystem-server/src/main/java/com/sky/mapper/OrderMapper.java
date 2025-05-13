@@ -3,10 +3,13 @@ package com.sky.mapper;
 import com.github.pagehelper.Page;
 import com.sky.annotation.AutoFill;
 import com.sky.dto.DishPageQueryDTO;
+import com.sky.dto.OrdersPageQueryDTO;
 import com.sky.entity.Dish;
 import com.sky.entity.Order;
 import com.sky.enumeration.OperationType;
 import com.sky.vo.DishVO;
+import com.sky.vo.OrderDetailVO;
+import com.sky.vo.OrderPageQueryVO;
 import com.sky.vo.OrderVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -39,8 +42,21 @@ public interface OrderMapper {
 
     /**
      * 取消订单
-     * @param id
-     * @param status
+     * @param order
      */
-    void updateStatus(String status, Long id);
+    void update(Order order);
+
+    /**
+     * 订单分页查询
+     * @param ordersPageQueryDTO
+     * @return
+     */
+    Page<OrderPageQueryVO> pageQuery(OrdersPageQueryDTO ordersPageQueryDTO);
+
+    /**
+     * 根据订单id查询订单的详细信息
+     * @param id
+     * @return
+     */
+    OrderDetailVO selectByOrderId(Integer id);
 }

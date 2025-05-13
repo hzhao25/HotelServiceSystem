@@ -26,4 +26,8 @@ public interface EmployeeService {
     void update(EmployeeDTO employeeDTO);
 
     Employee loginC(EmployeeLoginDTO employeeLoginDTO);
+
+    Employee getByPhone(String phone);
+
+    void updatePassword(String newPassword, Long id);
 }

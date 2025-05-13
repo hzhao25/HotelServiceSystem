@@ -1,6 +1,10 @@
 package com.sky.service;
 
 import com.sky.dto.OrderDTO;
+import com.sky.dto.OrdersPageQueryDTO;
+import com.sky.entity.Order;
+import com.sky.result.PageResult;
+import com.sky.vo.OrderDetailVO;
 import com.sky.vo.OrderVO;
 
 import java.util.List;
@@ -31,8 +35,21 @@ public interface OrderService {
 
     /**
      * 取消订单
-     * @param id
-     * @param status
+     * @param order
      */
-    void updateStatus(String status, Long id);
+    void updateStatus(Order order);
+
+    /**
+     * 订单分页查询
+     * @param ordersPageQueryDTO
+     * @return
+     */
+    PageResult pageQuery(OrdersPageQueryDTO ordersPageQueryDTO);
+
+    /**
+     * 根据订单id查询订单详细信息
+     * @param id
+     * @return
+     */
+    OrderDetailVO selectByOrderId(Integer id);
 }

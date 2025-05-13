@@ -111,6 +111,36 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     /**
+     * 更改密码
+     * @param newPassword
+     */
+    public void updatePassword(String newPassword) {
+        Employee employee=Employee.builder()
+                .password(newPassword)
+                .build();
+        employeeMapper.update(employee);
+    }
+
+    /**
+     * 根据手机号查找员工信息
+     * @param phone
+     * @return
+     */
+    public Employee getByPhone(String phone) {
+        Employee employee=employeeMapper.getByPhone(phone);
+        return employee;
+    }
+
+    /**
+     * 修改密码
+     * @param newPassword
+     * @param id
+     */
+    public void updatePassword(String newPassword, Long id) {
+        employeeMapper.updatePassword(newPassword,id);
+    }
+
+    /**
      * 新增员工信息
      * @param employeeDTO
      */
